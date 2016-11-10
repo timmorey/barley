@@ -1,0 +1,11 @@
+<span class='item-list-title'>{{title}}</span>
+<ul class='item-list-list'>
+  <li class='item-list-item'>
+    <a class='new-item-button' role='button' {{action onCreate}}>New</a>
+  </li>
+  {{#each items as |item|}}
+    <li class='item-list-item'>
+      <a class='item-list-item-title' role='button' {{action onOpen item}}>{{item.title}}</a>
+    </li>
+  {{/each}}
+</ul>

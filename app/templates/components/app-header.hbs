@@ -1,0 +1,20 @@
+<a class='app-header-title' role='button' {{action onHome}}>Barley</a>
+<div class='app-header-user'>
+  {{#if user}}
+    {{#basic-dropdown as |dropdown|}}
+      {{#dropdown.trigger}}
+        <img class='app-header-user-thumbnail' src={{user.photoURL}}>
+        <span class='app-header-user-name'>{{user.displayName}}</span>
+      {{/dropdown.trigger}}
+      {{#dropdown.content}}
+        <ul class='app-header-user-menu'>
+          <li class='app-header-user-menu-item'>
+            <a class='app-header-sign-out-button' role='button' {{action onSignOut}}>Sign Out</a>
+          </li>
+        </ul>
+      {{/dropdown.content}}
+    {{/basic-dropdown}}
+  {{else}}
+    <a class='app-header-sign-in-button' role='button' {{action onSignIn}}>Sign In</a>
+  {{/if}}
+</div>

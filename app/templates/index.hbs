@@ -1,0 +1,24 @@
+{{item-list
+  title='Brew Sessions'
+  items=model.brewSessions
+  onCreate=(route-action 'createBrewSession')
+  onOpen=(route-action 'openBrewSession')
+}}
+{{item-list
+  title='Recipes'
+  items=model.recipes
+  onCreate=(route-action 'createRecipe')
+  onOpen=(route-action 'openRecipe')
+}}
+{{item-list
+  title='Processes'
+  items=model.processes
+  onCreate=(route-action 'createProcess')
+  onOpen=(route-action 'openProcess')
+}}
+{{item-list
+  title='Resources'
+  items=model.resources
+  onCreate=(route-action 'createResource')
+  onOpen=(route-action 'openResource')
+}}

@@ -20,6 +20,18 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    firebase: {
+      apiKey: 'AIzaSyBuvLllmCal8h0VEpWV2mvEPX9C_Ttr5Q0',
+      authDomain: 'barley-f8e3f.firebaseapp.com',
+      databaseURL: 'https://barley-f8e3f.firebaseio.com',
+      storageBucket: 'barley-f8e3f.appspot.com',
+      messagingSenderId: '635373359007'
+    },
+
+    torii: {
+      sessionServiceName: 'session'
     }
   };
 

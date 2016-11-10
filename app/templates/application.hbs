@@ -1,0 +1,9 @@
+{{app-header
+  user=session.currentUser
+  onHome=(route-action 'goHome')
+  onSignIn=(route-action 'signIn')
+  onSignOut=(route-action 'signOut')
+}}
+<div class='app-content'>
+  {{outlet}}
+</div>

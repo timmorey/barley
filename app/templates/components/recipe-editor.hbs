@@ -1,0 +1,31 @@
+<div class='form-group'>
+  <label class='form-group-label'>
+    <span class='form-group-label-title'>Title</span>
+    {{input class='form-group-input' value=recipe.title}}
+  </label>
+</div>
+<div class='form-group'>
+  <span class='form-group-label-title'>
+    Ingredients <button class='btn btn-text' {{action 'addIngredient'}}>{{fa-icon 'plus'}}</button>
+  </span>
+  <div class='ingredient-list-header'>
+    <span class='ingredient-list-header-measure'>Measure</span>
+    <span class='ingredient-list-header-unit'>Unit</span>
+    <span class='ingredient-list-header-resource'>Resource</span>
+  </div>
+  <ul class='ingredient-list'>
+    {{#each recipe.ingredients as |ingredient|}}
+      <li class='ingredient-list-item'>
+        {{ingredient-editor
+          ingredient=ingredient
+          onRemove=(action 'removeIngredient')}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
+<div class='form-group'>
+  <button class='btn btn-primary save-button' disabled={{not isDirty}} {{action 'save'}}>Save</button>
+  {{#if (not recipe.isNew)}}
+    <span class='last-saved-time'>Last saved {{moment-from-now recipe.dateModified interval=1000}}</span>
+  {{/if}}
+</div>

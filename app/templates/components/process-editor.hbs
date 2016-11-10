@@ -1,0 +1,30 @@
+<div class='form-group'>
+  <label class='form-group-label'>
+    <span class='form-group-label-title'>Title</span>
+    {{input class='form-group-input' value=process.title}}
+  </label>
+</div>
+<div class='form-group'>
+  <span class='form-group-label'>
+    Parameters <button class='btn btn-text add-parameter-button' {{action 'addParameter'}}>{{fa-icon 'plus'}}</button>
+  </span>
+  <div class='parameter-list-header'>
+    <span class='parameter-list-header-name'>Name</span>
+    <span class='parameter-list-header-type'>Type</span>
+  </div>
+  <ul class='parameter-list'>
+    {{#each process.parameters as |parameter|}}
+      <li class='parameter-list-item'>
+        {{parameter-definition-editor
+          parameterDefinition=parameter
+          onRemove=(action 'removeParameter')}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
+<div class='form-group'>
+  <button class='btn btn-primary save-button' disabled={{not isDirty}} {{action 'save'}}>Save</button>
+  {{#if (not process.isNew)}}
+    <span class='last-saved-time'>Last saved {{moment-from-now process.dateModified interval=1000}}</span>
+  {{/if}}
+</div>

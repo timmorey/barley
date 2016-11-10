@@ -7,6 +7,30 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('brew-sessions', function() {
+    this.route('brew-session', { path: ':brewSession_id' }, function() {
+      this.route('edit');
+    });
+    this.route('new');
+  });
+  this.route('processes', function() {
+    this.route('process', { path: ':process_id'}, function() {
+      this.route('edit');
+    });
+    this.route('new');
+  });
+  this.route('recipes', function() {
+    this.route('recipe', { path: ':recipe_id' }, function() {
+      this.route('edit');
+    });
+    this.route('new');
+  });
+  this.route('resources', function() {
+    this.route('new');
+    this.route('resource', { path: ':resource_id' }, function() {
+      this.route('edit');
+    });
+  });
 });
 
 export default Router;

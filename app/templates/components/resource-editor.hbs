@@ -1,0 +1,12 @@
+<div class='form-group'>
+  <label class='form-group-label'>
+    <span class='form-group-label-title'>Title</span>
+    {{input class='form-group-input' value=resource.title}}
+  </label>
+</div>
+<div class='form-group'>
+  <button class='btn btn-primary save-button' disabled={{not resource.hasDirtyAttributes}} {{action onSave resource}}>Save</button>
+  {{#if (not resource.isNew)}}
+    <span class='last-saved-time'>Last saved {{moment-from-now resource.dateModified interval=1000}}</span>
+  {{/if}}
+</div>

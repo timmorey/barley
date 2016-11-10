@@ -1,0 +1,25 @@
+<div class='form-group'>
+  <label class='form-group-label'>
+    <span class='form-group-label-title'>Title</span>
+    {{input class='form-group-input' value=brewSession.title}}
+  </label>
+</div>
+<div class='form-group'>
+  <label class='form-group-label'>
+    <span class='form-group-label-titl'>Recipe</span>
+    {{#power-select
+      selected=brewSession.recipe
+      search=(action onSearchRecipes)
+      onchange=(action (mut brewSession.recipe))
+      as |recipe|
+    }}
+      {{recipe.title}}
+    {{/power-select}}
+  </label>
+</div>
+<div class='form-group'>
+  <button class='btn btn-primary save-button' disabled={{not brewSession.hasDirtyAttributes}} {{action onSave brewSession}}>Save</button>
+  {{#if (not brewSession.isNew)}}
+    <span class='last-saved-time'>Last saved {{moment-from-now brewSession.dateModified interval=1000}}</span>
+  {{/if}}
+</div>

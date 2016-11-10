@@ -1,0 +1,17 @@
+{{input
+  class='ingredient-editor-measure-input'
+  value=ingredient.measure
+  size=1}}
+{{input
+  class='ingredient-editor-unit-input'
+  value=ingredient.unit
+  size=1}}
+{{resource-picker
+  class='ingredient-editor-resource-picker'
+  selectedResource=ingredient.resource
+  onChange=(action (mut ingredient.resource))}}
+<button
+  class='btn btn-text'
+  {{action onRemove ingredient}}>
+  {{fa-icon 'times'}}
+</button>

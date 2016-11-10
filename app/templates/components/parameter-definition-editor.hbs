@@ -1,0 +1,11 @@
+{{input
+  class='parameter-definition-editor-name-input'
+  value=parameterDefinition.name}}
+{{input
+  class='parameter-definition-editor-type-input'
+  value=parameterDefinition.type}}
+<button
+  class='btn btn-text parameter-definition-editor-remove-button'
+  {{action onRemove parameterDefinition}}>
+  {{fa-icon 'times'}}
+</button>
