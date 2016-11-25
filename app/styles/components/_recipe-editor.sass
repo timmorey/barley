@@ -1,6 +1,16 @@
 .recipe-editor
+  position: relative
+  padding: 1rem
+
+  .item-dirty-status
+    position: absolute
+    width: 20px
+    height: 20px
+    top: 10px
+    right: 1rem
 
   .form-group
+
     &-label
       display: block
 
@@ -10,29 +20,6 @@
     &-input
       display: block
       width: 100%
-
-  .ingredient-list-header
-    margin: .5rem
-    display: flex
-    align-items: baseline
-    margin: .5rem
-
-    &-measure,
-    &-unit,
-      flex: 0 0 20%
-
-    &-unit
-      margin: 0 5px
-
-    &-resource
-      flex: 0 0 50%
-
-  .ingredient-list
-    padding: 0
-    list-style: none
-
-    &-item
-      margin: .5rem
 
   .save-button
     margin-right: .5rem

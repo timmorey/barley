@@ -2,8 +2,8 @@
   options=items
   selected=selectedItem
   searchField='title'
-  onchange=(action onChange)
-  as |item|
-}}
+  onchange=(action (action onChange))
+  onkeydown=(action 'createOnEnter')
+  as |item|}}
   {{item.title}}
 {{/power-select}}

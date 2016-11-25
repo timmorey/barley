@@ -8,8 +8,14 @@ export default Route.extend({
   model() {
     return this.store.createRecord('brew-session', {
       ownerUid: get(this, 'session.currentUser.uid'),
-      dateCreated: moment().toISOString()
+      dateCreated: moment().toISOString(),
+      dateModified: moment().toISOString()
     });
+  },
+
+  afterModel(model) {
+    model.save()
+      .then(() => this.transitionTo('brew-sessions.brew-session.edit', model));
   }
 
 });

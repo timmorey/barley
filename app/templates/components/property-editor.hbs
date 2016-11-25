@@ -1,0 +1,20 @@
+{{input
+  class='property-editor-name-input'
+  value=(readonly property.name)
+  size=1
+  input=(action (pipe (action 'updateName') (action onChange)))}}
+{{input
+  class='property-editor-measure-input'
+  value=(readonly property.measure)
+  size=1
+  input=(action (pipe (action 'updateMeasure') (action onChange)))}}
+{{input
+  class='property-editor-unit-input'
+  value=(readonly property.unit)
+  size=1
+  input=(action (pipe (action 'updateUnit') (action onChange)))}}
+<button
+  class='btn btn-text property-editor-remove-button'
+  {{action onRemove}}>
+  {{fa-icon 'times'}}
+</button>

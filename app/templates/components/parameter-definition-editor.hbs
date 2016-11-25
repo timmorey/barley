@@ -1,11 +1,15 @@
 {{input
   class='parameter-definition-editor-name-input'
-  value=parameterDefinition.name}}
+  value=(readonly parameterDefinition.name)
+  size=1
+  input=(action (pipe (action 'updateName') (action onChange)))}}
 {{input
   class='parameter-definition-editor-type-input'
-  value=parameterDefinition.type}}
+  value=(readonly parameterDefinition.type)
+  size=1
+  input=(action (pipe (action 'updateType') (action onChange)))}}
 <button
   class='btn btn-text parameter-definition-editor-remove-button'
-  {{action onRemove parameterDefinition}}>
+  {{action onRemove}}>
   {{fa-icon 'times'}}
 </button>

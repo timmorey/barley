@@ -1,17 +1,19 @@
 {{input
   class='ingredient-editor-measure-input'
-  value=ingredient.measure
-  size=1}}
+  value=(readonly ingredient.measure)
+  size=1
+  input=(action (pipe (action 'updateMeasure') (action onChange)))}}
 {{input
   class='ingredient-editor-unit-input'
-  value=ingredient.unit
-  size=1}}
+  value=(readonly ingredient.unit)
+  size=1
+  input=(action (pipe (action 'updateUnit') (action onChange)))}}
 {{resource-picker
   class='ingredient-editor-resource-picker'
-  selectedResource=ingredient.resource
-  onChange=(action (mut ingredient.resource))}}
+  selectedResourceId=ingredient.resourceId
+  onChange=(action (pipe (action 'updateResource') (action onChange)))}}
 <button
   class='btn btn-text'
-  {{action onRemove ingredient}}>
+  {{action onRemove}}>
   {{fa-icon 'times'}}
 </button>

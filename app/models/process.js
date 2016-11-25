@@ -3,6 +3,8 @@ import BarleyObject from 'barley/models/abstract/barley-object';
 
 export default BarleyObject.extend({
 
-  parameters: DS.hasMany('property', { async: true, inverse: null })
+  version: DS.attr({ defaultValue: '0.0.0' }),
+
+  parameters: DS.attr({ defaultValue: () => [] })
 
 });

@@ -1,31 +1,33 @@
+{{item-dirty-status item=recipe}}
 <div class='form-group'>
   <label class='form-group-label'>
     <span class='form-group-label-title'>Title</span>
-    {{input class='form-group-input' value=recipe.title}}
+    {{input class='form-group-input' value=recipe.title input=(action onChange)}}
   </label>
 </div>
 <div class='form-group'>
-  <span class='form-group-label-title'>
-    Ingredients <button class='btn btn-text' {{action 'addIngredient'}}>{{fa-icon 'plus'}}</button>
-  </span>
-  <div class='ingredient-list-header'>
-    <span class='ingredient-list-header-measure'>Measure</span>
-    <span class='ingredient-list-header-unit'>Unit</span>
-    <span class='ingredient-list-header-resource'>Resource</span>
-  </div>
-  <ul class='ingredient-list'>
-    {{#each recipe.ingredients as |ingredient|}}
-      <li class='ingredient-list-item'>
-        {{ingredient-editor
-          ingredient=ingredient
-          onRemove=(action 'removeIngredient')}}
-      </li>
-    {{/each}}
-  </ul>
+  {{#each recipe.ingredientGroups key='@index' as |ingredientGroup|}}
+    {{ingredient-group-editor
+      ingredientGroup=ingredientGroup
+      onChange=(action (queue (action 'updateIngredientGroup' ingredientGroup) (action onChange)))
+      onRemove=(action (queue (action 'removeIngredientGroup' ingredientGroup) (action onChange)))}}
+  {{/each}}
+  <button
+    class='add-ingredient-group-button btn btn-text'
+    {{action (queue (action 'addIngredientGroup') (action onChange))}}>
+    {{fa-icon 'plus'}} Ingredent Group
+  </button>
 </div>
 <div class='form-group'>
-  <button class='btn btn-primary save-button' disabled={{not isDirty}} {{action 'save'}}>Save</button>
-  {{#if (not recipe.isNew)}}
-    <span class='last-saved-time'>Last saved {{moment-from-now recipe.dateModified interval=1000}}</span>
-  {{/if}}
+  {{#each recipe.instructionGroups key='@index' as |instructionGroup|}}
+    {{instruction-group-editor
+      instructionGroup=instructionGroup
+      onChange=(action (queue (action 'updateInstructionGroup' instructionGroup) (action onChange)))
+      onRemove=(action (queue (action 'removeInstructionGroup' instructionGroup) (action onChange)))}}
+  {{/each}}
+  <button
+    class='add-instruction-group-button btn btn-text'
+    {{action 'addInstructionGroup'}}>
+    {{fa-icon 'plus'}} Instruction Group
+  </button>
 </div>

@@ -1,5 +1,5 @@
-{{brew-session-editor
+{{#brew-session-editor
   brewSession=model
-  onSearchRecipes=(route-action 'searchRecipes')
-  onSave=(route-action 'save')
-}}
+  onChange=(route-action 'save' model)}}
+  {{outlet}}
+{{/brew-session-editor}}

@@ -1,0 +1,15 @@
+{{#if isEditing}}
+  {{input
+    class='editable-string-input'
+    value=(readonly value)
+    input=(action (pipe (action 'extractValue') (action onChange)))
+    focus-out=(action (mut isEditing) false)
+    key-down=(action 'blurOnEnter')}}
+{{else}}
+  <span class='editable-string-label'>{{value}}</span>
+  <button
+    class='editable-string-edit-button btn btn-text'
+    {{action (queue (action (mut isEditing) true) (action 'focusInput'))}}>
+    {{fa-icon 'pencil'}}
+  </button>
+{{/if}}

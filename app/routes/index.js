@@ -22,7 +22,7 @@ export default Route.extend({
         orderBy: 'ownerUid',
         equalTo: get(this, 'session.currentUser.uid')
       })
-    });
+    }).then(results => results);
   },
 
   actions: {

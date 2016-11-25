@@ -1,15 +1,31 @@
 .brew-session-editor
+  display: flex
+  align-items: stretch
 
-  .form-group
-    &-label
+  &-menu-pane
+    flex: 0 0 144px
+    border-right: 1px solid #eee
+    padding: 1rem
+
+  &-content-pane
+    flex: 1
+    padding: 1rem
+
+  &-menu
+    list-style: none
+    margin: 0
+    padding: 0
+
+    &-item
+      text-align: right
+
+    &-link
       display: block
+      padding: 5px
 
-      &-title
-        display: block
+      &:hover,
+      &:focus
+        text-decoration: none
 
-    &-input
-      display: block
-      width: 100%
-
-  .save-button
-    margin-right: .5rem
+      &.active
+        background-color: #eee

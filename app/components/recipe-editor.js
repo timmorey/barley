@@ -1,40 +1,50 @@
 import Ember from 'ember';
 
-const { computed, get } = Ember;
+const { Component, get, set } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
 
   classNames: ['recipe-editor'],
 
   recipe: undefined,
 
-  isDirty: computed.or('recipe.hasDirtyAttributes', '_dirtyIngredients.length', '_removedIngredients.length'),
-
-  _removedChildObjects: computed.alias('_removedIngredients'),
-
-  _dirtyIngredients: computed.filterBy('recipe.ingredients', 'hasDirtyAttributes'),
-
-  _removedIngredients: computed(function() {
-    return [];
-  }),
-
   actions: {
 
-    save() {
-      this.onSave(get(this, 'recipe'), get(this, '_removedChildObjects'))
-        .then(() => get(this, '_removedChildObjects').clear());
+    addIngredientGroup() {
+      const newIngredientGroup = { title: 'New ingredient group', ingredients: [] };
+      const updatedInredientGroups = (get(this, 'recipe.ingredientGroups') || []).concat(newIngredientGroup);
+      set(this, 'recipe.ingredientGroups', updatedInredientGroups);
     },
 
-    addIngredient() {
-      get(this, 'recipe.ingredients').addObject(this.onCreateIngredient());
+    removeIngredientGroup(ingredientGroup) {
+      set(this, 'recipe.ingredientGroups', get(this, 'recipe.ingredientGroups').without(ingredientGroup));
     },
 
-    removeIngredient(ingredient) {
-      if (!get(ingredient, 'isNew')) {
-        get(this, '_removedIngredients').addObject(ingredient);
-      }
-      get(this, 'recipe.ingredients').removeObject(ingredient);
-    }
+    updateIngredientGroup(oldIngredientGroup, newIngredientGroup) {
+      const ingredientGroupPos = get(this, 'recipe.ingredientGroups').indexOf(oldIngredientGroup);
+      const updatedIngredientGroups = get(this, 'recipe.ingredientGroups').slice(0, ingredientGroupPos)
+        .concat(newIngredientGroup)
+        .concat(get(this, 'recipe.ingredientGroups').slice(ingredientGroupPos + 1));
+      set(this, 'recipe.ingredientGroups', updatedIngredientGroups);
+    },
+
+    addInstructionGroup() {
+      const newInstructionGroup = { title: 'New instruction group', instructions: [] };
+      const updatedInstructionGroups = (get(this, 'recipe.instructionGroups') || []).concat(newInstructionGroup);
+      set(this, 'recipe.instructionGroups', updatedInstructionGroups);
+    },
+
+    removeInstructionGroup(instructionGroup) {
+      set(this, 'recipe.instructionGroups', get(this, 'recipe.instructionGroups').without(instructionGroup));
+    },
+
+    updateInstructionGroup(oldInstructionGroup, newInstructionGroup) {
+      const instructionGroupPos = get(this, 'recipe.instructionGroups').indexOf(oldInstructionGroup);
+      const updatedInstructionGroups = get(this, 'recipe.instructionGroups').slice(0, instructionGroupPos)
+        .concat(newInstructionGroup)
+        .concat(get(this, 'recipe.instructionGroups').slice(instructionGroupPos + 1));
+      set(this, 'recipe.instructionGroups', updatedInstructionGroups);
+    },
 
   }
 

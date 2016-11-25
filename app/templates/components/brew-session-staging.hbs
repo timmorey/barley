@@ -1,0 +1,14 @@
+<div class='form-group'>
+  <label class='form-group-label'>
+    <span class='form-group-label-title'>Title</span>
+    {{input class='form-group-input' value=brewSession.title input=(action onChange)}}
+  </label>
+</div>
+<div class='form-group'>
+  <label class='form-group-label'>
+    <span class='form-group-label-title'>Recipe</span>
+    {{recipe-picker
+      selectedRecipe=brewSession.baseRecipe
+      onChange=(action (pipe (action 'updateRecipe') (action onChange)))}}
+  </label>
+</div>

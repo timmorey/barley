@@ -2,6 +2,6 @@ import Ember from 'ember';
 
 const { ObjectProxy } = Ember;
 
-export default ObjectProxy.create({
+export default ObjectProxy.extend({
 
 });

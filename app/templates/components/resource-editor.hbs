@@ -1,12 +1,31 @@
 <div class='form-group'>
   <label class='form-group-label'>
     <span class='form-group-label-title'>Title</span>
-    {{input class='form-group-input' value=resource.title}}
+    {{input class='form-group-input' value=resource.title input=(action onChange)}}
   </label>
 </div>
 <div class='form-group'>
-  <button class='btn btn-primary save-button' disabled={{not resource.hasDirtyAttributes}} {{action onSave resource}}>Save</button>
-  {{#if (not resource.isNew)}}
-    <span class='last-saved-time'>Last saved {{moment-from-now resource.dateModified interval=1000}}</span>
-  {{/if}}
+  <span class='form-group-label'>
+    <span class='form-group-label-title'>Properties</span>
+    <button
+      class='btn btn-text add-property-button'
+      {{action (pipe (action 'addProperty') (action onChange))}}>
+      {{fa-icon 'plus'}} Property
+    </button>
+  </span>
+  <div class='resource-editor-property-list-header'>
+    <span class='resource-editor-property-list-header-name'>Name</span>
+    <span class='resource-editor-property-list-header-measure'>Measure</span>
+    <span class='resource-editor-property-list-header-unit'>Unit</span>
+  </div>
+  <ul class='resource-editor-property-list'>
+    {{#each resource.properties key='@index' as |property|}}
+      <li class='resource-editor-property-list-item'>
+        {{property-editor
+          property=property
+          onChange=(action (pipe (action 'updateProperty' property) (action onChange)))
+          onRemove=(action (pipe (action 'removeProperty' property) (action onChange)))}}
+      </li>
+    {{/each}}
+  </ul>
 </div>

@@ -7,6 +7,7 @@ export default Component.extend({
   classNames: ['item-picker'],
 
   items: undefined,
-  selectedItem: undefined
+  selectedItem: undefined,
+  allowCreate: true
 
 });

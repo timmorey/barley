@@ -1,0 +1,15 @@
+<span class='parameter-editor-parameter-name'>{{parameter.name}}</span>
+<div class='parameter-editor-parameter-value'>
+  {{#if (eq parameter.type 'measure')}}
+    {{input
+      class='parameter-editor-measure-measure-input'
+      value=(readonly parameter.measure)
+      size=1
+      input=(action (pipe (action 'updateMeasure') (action onChange)))}}
+    {{input
+      class='parameter-editor-measure-unit-input'
+      value=(readonly parameter.unit)
+      size=1
+      input=(action (pipe (action 'updateUnit') (action onChange)))}}
+  {{/if}}
+</div>

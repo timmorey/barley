@@ -1,9 +1,14 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 import BarleyObject from 'barley/models/abstract/barley-object';
 
+const { computed, get, getProperties } = Ember;
+
 export default BarleyObject.extend({
 
-  ingredients: DS.hasMany('ingredient', { async: true, inverse: null }),
-  instructions: DS.hasMany('instruction', { async: true, inverse: null })
+  version: DS.attr({ defaultValue: '0.0.0' }),
+
+  ingredientGroups: DS.attr({ defaultValue: () => [] }),
+  instructionGroups: DS.attr({ defaultValue: () => [] })
 
 });

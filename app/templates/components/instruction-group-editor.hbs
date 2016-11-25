@@ -1,0 +1,15 @@
+<div class='instruction-group-editor-header'>
+  <span class='instruction-group-editor-title'>{{instructionGroup.title}}</span>
+  <button class='btn btn-text' {{action (pipe (action 'addInstruction') (action onChange))}}>{{fa-icon 'plus'}} Instruction</button>
+  <button class='remove-instruction-group-button btn btn-text' {{action onRemove}}>{{fa-icon 'times'}}</button>
+</div>
+<ul class='instruction-group-editor-list'>
+  {{#each instructionGroup.instructions key='@index' as |instruction|}}
+    <li class='instruction-group-editor-list-item'>
+      {{instruction-editor
+        instruction=instruction
+        onChange=(action (pipe (action 'updateInstruction' instruction) (action onChange)))
+        onRemove=(action (pipe (action 'removeInstruction' instruction) (action onChange)))}}
+    </li>
+  {{/each}}
+</ul>

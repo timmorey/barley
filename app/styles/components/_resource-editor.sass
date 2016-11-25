@@ -1,15 +1,26 @@
 .resource-editor
+  padding: 1rem
 
   .form-group
     &-label
       display: block
 
-      &-title
-        display: block
-
     &-input
       display: block
       width: 100%
 
-  .save-button
-    margin-right: .5rem
+  &-property-list
+    list-style: none
+    padding: 0
+
+    &-header
+      display: flex
+
+      &-name
+        flex: 0 1 200px
+        margin-right: 5px
+
+      &-measure,
+      &-unit
+        flex: 0 1 100px
+        margin-right: 5px

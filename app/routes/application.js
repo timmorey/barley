@@ -32,19 +32,6 @@ export default Route.extend({
     signOut: function() {
       this.get('session').close();
       this.transitionTo('brew-sessions.new');
-    },
-
-    createIngredient(options) {
-      return this.store.createRecord('ingredient', options);
-    },
-
-    createProcessParameterDefinition(options) {
-      return this.store.createRecord('property', options);
-    },
-
-    searchRecipes(text) {
-      return this.store.findAll('recipe')
-        .then(recipes => recipes.filter(recipe => get(recipe, 'title').indexOf(text) !== -1));
     }
 
   }

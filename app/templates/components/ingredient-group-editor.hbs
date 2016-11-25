@@ -1,0 +1,29 @@
+<div class='ingredient-group-editor-header'>
+  {{#if allowEditTitle}}
+    {{editable-string
+      class='ingredient-group-editor-title'
+      value=ingredientGroup.title
+      onChange=(action (pipe (action 'updateTitle') (action onChange)))}}
+  {{else}}
+    <span class='ingredient-group-editor-title'>{{ingredientGroup.title}}</span>
+  {{/if}}
+  <button class='btn btn-text' {{action (pipe (action 'addIngredient') (action onChange))}}>{{fa-icon 'plus'}} Ingredient</button>
+  {{#if allowRemove}}
+    <button class='remove-ingredient-group-button btn btn-text' {{action onRemove}}>{{fa-icon 'times'}}</button>
+  {{/if}}
+</div>
+<div class='ingredient-group-editor-list-header'>
+  <span class='ingredient-group-editor-list-header-measure'>Measure</span>
+  <span class='ingredient-group-editor-list-header-unit'>Unit</span>
+  <span class='ingredient-group-editor-list-header-resource'>Resource</span>
+</div>
+<ul class='ingredient-group-editor-list'>
+  {{#each ingredientGroup.ingredients key='@index' as |ingredient|}}
+    <li class='ingredient-group-editor-list-item'>
+      {{ingredient-editor
+        ingredient=ingredient
+        onChange=(action (pipe (action 'updateIngredient' ingredient) (action onChange)))
+        onRemove=(action (pipe (action 'removeIngredient' ingredient) (action onChange)))}}
+    </li>
+  {{/each}}
+</ul>

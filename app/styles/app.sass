@@ -5,10 +5,19 @@
 
 @import components/app-header
 @import components/brew-session-editor
+@import components/brew-session-mash
+@import components/brew-session-staging
+@import components/editable-string
 @import components/ingredient-editor
+@import components/ingredient-group-editor
+@import components/instruction-editor
+@import components/instruction-group-editor
+@import components/item-dirty-status
 @import components/item-list
 @import components/parameter-definition-editor
+@import components/parameter-editor
 @import components/process-editor
+@import components/property-editor
 @import components/recipe-editor
 @import components/resource-editor
 
@@ -16,8 +25,8 @@ html, body
   font-family: 'Catamaran', sans-serif
   font-size: 17px
 
-.app-content
-  padding: 1rem
+html, body, body>.ember-view
+  height: 100%
 
 .btn-text
   background: none

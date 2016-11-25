@@ -1,9 +1,27 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, assign, get } = Ember;
+
+export default Component.extend({
 
   classNames: ['ingredient-editor'],
 
-  ingredient: undefined
+  ingredient: undefined,
+
+  actions: {
+
+    updateMeasure(event) {
+      return assign({}, get(this, 'ingredient'), { measure: event.target.value });
+    },
+
+    updateUnit(event) {
+      return assign({}, get(this, 'ingredient'), { unit: event.target.value });
+    },
+
+    updateResource(resource) {
+      return assign({}, get(this, 'ingredient'), { resourceId: get(resource, 'id') });
+    }
+
+  }
 
 });

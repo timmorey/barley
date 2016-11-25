@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, get } = Ember;
+const { Component, get, set } = Ember;
 
 export default Component.extend({
 
@@ -8,33 +8,26 @@ export default Component.extend({
 
   process: undefined,
 
-  isDirty: computed.or('process.hasDirtyAttributes', '_dirtyParameters.length', '_removedParameters.length'),
-
-  _dirtyParameters: computed.filter('process.parameters', function(parameter) {
-    return get(parameter, 'hasDirtyAttributes');
-  }),
-
-  _removedParameters: computed(function() {
-    return [];
-  }),
-
   actions: {
 
-    save() {
-      this.onSave(get(this, 'process'), get(this, '_removedParameters'))
-        .then(() => get(this, '_removedParameters').clear());
-    },
-
     addParameter() {
-      get(this, 'process.parameters').addObject(this.onCreateParameterDefinition());
+      const newParameter = { name: '', value: '' };
+      const updatedParameters = (get(this, 'process.parameters') || []).concat(newParameter);
+      set(this, 'process.parameters', updatedParameters);
     },
 
     removeParameter(parameter) {
-      if (!get(parameter, 'isNew')) {
-        get(this, '_removedParameters').addObject(parameter);
-      }
-      get(this, 'process.parameters').removeObject(parameter);
+      set(this, 'process.parameters', get(this, 'process.parameters').without(parameter));
+    },
+
+    updateParameter(oldParameter, newParameter) {
+      const parameterPos = get(this, 'process.parameters').indexOf(oldParameter);
+      const updatedParameters = get(this, 'process.parameters').slice(0, parameterPos)
+        .concat(newParameter)
+        .concat(get(this, 'process.parameters').slice(parameterPos + 1));
+      set(this, 'process.parameters', updatedParameters);
     }
+
   }
 
 });

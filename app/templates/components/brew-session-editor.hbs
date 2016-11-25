@@ -1,25 +1,16 @@
-<div class='form-group'>
-  <label class='form-group-label'>
-    <span class='form-group-label-title'>Title</span>
-    {{input class='form-group-input' value=brewSession.title}}
-  </label>
+<div class='brew-session-editor-menu-pane'>
+  <ul class='brew-session-editor-menu'>
+    <li class='brew-session-editor-menu-item'>
+      {{#link-to 'brew-sessions.brew-session.edit.index' class='brew-session-editor-menu-link'}}Staging{{/link-to}}
+    </li>
+    <li class='brew-session-editor-menu-item'>
+      {{#link-to 'brew-sessions.brew-session.edit.mash' class='brew-session-editor-menu-link'}}Mash{{/link-to}}
+    </li>
+    <li class='brew-session-editor-menu-item'>
+      {{#link-to 'brew-sessions.brew-session.edit.boil' class='brew-session-editor-menu-link'}}Boil{{/link-to}}
+    </li>
+  </ul>
 </div>
-<div class='form-group'>
-  <label class='form-group-label'>
-    <span class='form-group-label-titl'>Recipe</span>
-    {{#power-select
-      selected=brewSession.recipe
-      search=(action onSearchRecipes)
-      onchange=(action (mut brewSession.recipe))
-      as |recipe|
-    }}
-      {{recipe.title}}
-    {{/power-select}}
-  </label>
-</div>
-<div class='form-group'>
-  <button class='btn btn-primary save-button' disabled={{not brewSession.hasDirtyAttributes}} {{action onSave brewSession}}>Save</button>
-  {{#if (not brewSession.isNew)}}
-    <span class='last-saved-time'>Last saved {{moment-from-now brewSession.dateModified interval=1000}}</span>
-  {{/if}}
+<div class='brew-session-editor-content-pane'>
+  {{yield}}
 </div>

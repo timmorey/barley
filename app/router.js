@@ -9,7 +9,10 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('brew-sessions', function() {
     this.route('brew-session', { path: ':brewSession_id' }, function() {
-      this.route('edit');
+      this.route('edit', function() {
+        this.route('mash');
+        this.route('boil');
+      });
     });
     this.route('new');
   });

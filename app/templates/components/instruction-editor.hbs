@@ -1,0 +1,20 @@
+<div class='instruction-editor-header'>
+  {{process-picker
+    class='instruction-editor-process-picker'
+    selectedProcessId=instruction.processId
+    onChange=(action (pipe (action 'updateProcess') (action onChange)))}}
+  <button
+    class='btn btn-text'
+    {{action onRemove}}>
+    {{fa-icon 'times'}}
+  </button>
+</div>
+<ul class='instruction-editor-parameter-list'>
+  {{#each instruction.parameters key='@index' as |parameter|}}
+    <li class='instruction-editor-parameter-list-item'>
+      {{parameter-editor
+        parameter=parameter
+        onChange=(action (pipe (action 'updateParameter' parameter) (action onChange)))}}
+    </li>
+  {{/each}}
+</ul>
