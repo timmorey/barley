@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Route, get } = Ember;
+const { Route } = Ember;
 
 export default Route.extend({
 
@@ -8,24 +8,14 @@ export default Route.extend({
     return this.get('session').fetch().catch(() => {});
   },
 
-  redirect() {
-    if (!get(this, 'session.isAuthenticated')) {
-      this.transitionTo('brew-sessions.new');
-    }
-  },
-
   actions: {
 
     goHome() {
-      if (get(this, 'session.isAuthenticated')) {
-        this.transitionTo('index');
-      } else {
-        this.transitionTo('brew-sessions.new');
-      }
+      this.transitionTo('index');
     },
 
     signIn() {
-      this.get('session').open('firebase', { provider: 'github' })
+      this.get('session').open('firebase', { provider: 'google' })
         .then(() => this.transitionTo('index'));
     },
 

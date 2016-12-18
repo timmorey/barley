@@ -5,5 +5,7 @@
   onSignOut=(route-action 'signOut')
 }}
 <div class='app-content'>
-  {{outlet}}
+  {{#if session.isAuthenticated}}
+    {{outlet}}
+  {{/if}}
 </div>
