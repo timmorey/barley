@@ -10,12 +10,8 @@ export default Component.extend({
 
   actions: {
 
-    updateMeasure(event) {
-      return assign({}, get(this, 'ingredient'), { measure: event.target.value });
-    },
-
-    updateUnit(event) {
-      return assign({}, get(this, 'ingredient'), { unit: event.target.value });
+    updateAmount(event) {
+      return assign({}, get(this, 'ingredient'), { amount: event.target.value });
     },
 
     updateResource(resource) {

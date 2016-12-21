@@ -1,0 +1,21 @@
+<ul class='brew-session-stream-list'>
+  {{#each stream as |event|}}
+    <li class='brew-session-stream-list-item'>
+      <span class='brew-session-stream-event-timestamp'>{{moment-format event.timestamp 'h:mm'}}</span>
+      <span class='brew-session-stream-event-label'>{{event.label}}</span>
+      <span class='brew-session-stream-event-measure'>{{event.measure}}</span>
+      <button class='brew-session-stream-event-remove-button btn btn-text' {{action (pipe (action 'removeEvent') (action onChange)) event}}>{{fa-icon 'times'}}</button>
+    </li>
+  {{/each}}
+</ul>
+<div class='brew-session-stream-input'>
+  {{input
+    class='brew-session-stream-input-label'
+    value=labelInputValue
+    enter=(action (pipe (action 'addObservation') (action onChange)))}}
+  {{input
+    class='brew-session-stream-input-measure'
+    value=measureInputValue
+    enter=(action (pipe (action 'addObservation') (action onChange)))}}
+  <button class='btn btn-text' {{action (pipe (action 'addObservation') (action onChange))}}>{{fa-icon 'plus'}}</button>
+</div>

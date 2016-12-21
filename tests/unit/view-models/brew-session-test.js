@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import BrewSession from 'workforce-js/view-models/brew-session';
+import BrewSession from 'barley/view-models/brew-session';
 
 module('Unit | view-model | BrewSession', {
   needs: []

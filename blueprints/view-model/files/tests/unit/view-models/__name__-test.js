@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import <%= classifiedModuleName %> from 'workforce-js/view-models/<%= dasherizedModuleName %>';
+import <%= classifiedModuleName %> from 'barley/view-models/<%= dasherizedModuleName %>';
 
 module('Unit | view-model | <%= classifiedModuleName %>', {
   needs: []

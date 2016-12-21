@@ -4,15 +4,10 @@
   size=1
   input=(action (pipe (action 'updateName') (action onChange)))}}
 {{input
-  class='property-editor-measure-input'
-  value=(readonly property.measure)
+  class='property-editor-value-input'
+  value=(readonly property.value)
   size=1
-  input=(action (pipe (action 'updateMeasure') (action onChange)))}}
-{{input
-  class='property-editor-unit-input'
-  value=(readonly property.unit)
-  size=1
-  input=(action (pipe (action 'updateUnit') (action onChange)))}}
+  input=(action (pipe (action 'updateValue') (action onChange)))}}
 <button
   class='btn btn-text property-editor-remove-button'
   {{action onRemove}}>

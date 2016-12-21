@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import BeerRecipe from 'workforce-js/view-models/beer-recipe';
+import BeerRecipe from 'barley/view-models/beer-recipe';
 
 module('Unit | view-model | BeerRecipe', {
   needs: []

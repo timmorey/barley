@@ -1,51 +1,51 @@
 {{ingredient-group-editor
   allowEditTitle=false
   allowRemove=false
-  ingredientGroup=grainsGroup
+  showTotal=true
+  ingredientGroup=grainGroup
   onChange=(action (pipe (action 'updateGrains') (action onChange)))}}
-<div class='grain-total-mass'>
-  <span class='grain-total-mass-label'>Total grain mass:</span>
-  <span class='grain-total-mass-measure'>{{format-number totalGrainMass.measure decimalPlaces=2}}</span>
-  <span class='grain-total-mass-unit'>{{totalGrainMass.unit}}</span>
+<div class='brew-session-mash-property'>
+  <label class='brew-session-mash-property-label'>
+    <span class='brew-session-mash-property-label-title'>Mash Thickness</span>
+    {{input
+      class='brew-session-mash-property-value-input'
+      value=(readonly mashThickness.significantValue)
+      input=(action (pipe (action 'updateMashThickness') (action onChange)))}}
+  </label>
 </div>
-<div class='mash-thickness'>
-  <label class='mash-thickness-label'>Mash Thickness:</label>
-  {{input
-    class='mash-thickness-measure-input'
-    value=(readonly mashThickness.measure)
-    input=(action (pipe (action 'updateMashThicknessMeasure') (action onChange)))}}
-  {{input
-    class='mash-thickness-unit-input'
-    value=(readonly mashThickness.unit)
-    input=(action (pipe (action 'updateMashThicknessUnit') (action onChange)))}}
+<div class='brew-session-mash-property'>
+  <label class='brew-session-mash-property-label'>
+    <span class='brew-session-mash-property-label-title'>Mash Temperature</span>
+    {{input
+      class='brew-session-mash-property-value-input'
+      value=(readonly mashTemperature.significantValue)
+      input=(action (pipe (action 'updateMashTemperature') (action onChange)))}}
+  </label>
 </div>
-<div class='mash-temperature'>
-  <label class='mash-temperature-label'>Mash Temperature:</label>
-  {{input
-    class='mash-temperature-measure-input'
-    value=(readonly mashTemperature.measure)
-    input=(action (pipe (action 'updateMashTemperatureMeasure') (action onChange)))}}
-  {{input
-    class='mash-temperature-unit-input'
-    value=(readonly mashTemperature.unit)
-    input=(action (pipe (action 'updateMashTemperatureUnit') (action onChange)))}}
+<div class='brew-session-mash-property'>
+  <label class='brew-session-mash-property-label'>
+    <span class='brew-session-mash-property-label-title'>Grain Temperature</span>
+    {{input
+      class='brew-session-mash-property-value-input'
+      value=(readonly grainTemperature.significantValue)
+      input=(action (pipe (action 'updateGrainTemperature') (action onChange)))}}
+  </label>
 </div>
-<div class='grain-temperature'>
-  <label class='grain-temperature-label'>Grain Temperature:</label>
-  {{input
-    class='grain-temperature-measure-input'
-    value=(readonly grainTemperature.measure)
-    input=(action (pipe (action 'updateGrainTemperatureMeasure') (action onChange)))}}
-  {{input
-    class='grain-temperature-unit-input'
-    value=(readonly grainTemperature.unit)
-    input=(action (pipe (action 'updateGrainTemperatureUnit') (action onChange)))}}
+<div class='brew-session-mash-property'>
+  <label class='brew-session-mash-property-label'>
+    <span class='brew-session-mash-property-label-title'>Strike Volume</span>
+    {{input
+      class='brew-session-mash-property-value-input'
+      value=(readonly strikeVolume.significantValue)
+      input=(action (pipe (action 'updateStrikeVolume') (action onChange)))}}
+  </label>
 </div>
-<div class='strike-stats'>
-  <span class='strike-stats-volume-label'>Strike Water:</span>
-  <span class='strike-stats-volume-measure'>{{format-number strikeVolume.measure decimalPlaces=2}}</span>
-  <span class='strike-stats-volume-unit'>{{strikeVolume.unit}}</span>
-  @
-  <span class='strike-stats-temperature-measure'>{{format-number strikeTemperature.measure decimalPlaces=2}}</span>
-  <span class='strike-stats-temperature-unit'>{{strikeTemperature.unit}}</span>
+<div class='brew-session-mash-property'>
+  <label class='brew-session-mash-property-label'>
+    <span class='brew-session-mash-property-label-title'>Strike Temperature</span>
+    {{input
+      class='brew-session-mash-property-value-input'
+      value=(readonly strikeTemperature.significantValue)
+      input=(action (pipe (action 'updateStrikeTemperature') (action onChange)))}}
+  </label>
 </div>

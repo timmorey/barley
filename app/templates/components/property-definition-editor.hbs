@@ -1,0 +1,15 @@
+{{input
+  class='property-definition-editor-name-input'
+  value=(readonly propertyDefinition.name)
+  size=1
+  input=(action (pipe (action 'updateName') (action onChange)))}}
+{{input
+  class='property-definition-editor-type-input'
+  value=(readonly propertyDefinition.type)
+  size=1
+  input=(action (pipe (action 'updateType') (action onChange)))}}
+<button
+  class='btn btn-text property-definition-editor-remove-button'
+  {{action onRemove}}>
+  {{fa-icon 'times'}}
+</button>

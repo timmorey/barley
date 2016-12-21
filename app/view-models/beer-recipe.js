@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { ObjectProxy, computed, get, getProperties } = Ember;
+const { ObjectProxy, computed, get } = Ember;
 
 export default ObjectProxy.extend({
 
@@ -22,26 +22,26 @@ export default ObjectProxy.extend({
   mashThickness: computed('instructionGroups', function() {
     if (get(this, '_mashInstruction')) {
       const param = this._parameterCalled('thickness', get(this, '_mashInstruction'));
-      return getProperties(param, 'measure', 'unit');
+      return get(param, 'value');
     }
   }),
 
   mashTemperature: computed('instructionGroups', function() {
     if (get(this, '_mashInstruction')) {
       const param = this._parameterCalled('temperature', get(this, '_mashInstruction'));
-      return getProperties(param, 'measure', 'unit');
+      return get(param, 'value');
     }
   }),
 
   mashDuration: computed('instructionGroups', function() {
     if (get(this, '_mashInstruction')) {
       const param = this._parameterCalled('time', get(this, '_mashInstruction'));
-      return getProperties(param, 'measure', 'unit');
+      return get(param, 'value');
     }
   }),
 
   _mashInstruction: computed('instructionGroups', function() {
-    const mashProcessId = '-KXVnVnIQtpgBqGZsufh';
+    const mashProcessId = '-KZbqxC6bAGqWHpc6RBp';
     return (get(this, 'instructionGroups') || [])
       .reduce((instructions, instructionGroup) => instructions.concat(get(instructionGroup, 'instructions') || []), [])
       .findBy('processId', mashProcessId);

@@ -1,0 +1,20 @@
+<div class='calculator-tool-history'>
+  {{#each historyItems as |item|}}
+    <div class='calculator-tool-history-item'>
+      <span class='calculator-tool-history-item-input'>{{item.input}}</span>
+      {{#if item.error}}
+        <span class='calculator-tool-history-item-error'>{{item.error}}</span>
+      {{else}}
+        <span class='calculator-tool-history-item-output'>{{item.output}}</span>
+      {{/if}}
+    </div>
+  {{/each}}
+</div>
+<div class='calculator-tool-input-area'>
+  {{input
+    class='calculator-tool-input'
+    value=inputValue
+    size=1
+    enter=(action 'evaluate')}}
+  <button class='calculator-tool-evaluate-button btn btn-text' {{action 'evaluate'}}>{{fa-icon 'calculator'}}</button>
+</div>

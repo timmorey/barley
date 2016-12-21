@@ -12,9 +12,10 @@
 <ul class='instruction-editor-parameter-list'>
   {{#each instruction.parameters key='@index' as |parameter|}}
     <li class='instruction-editor-parameter-list-item'>
-      {{parameter-editor
-        parameter=parameter
-        onChange=(action (pipe (action 'updateParameter' parameter) (action onChange)))}}
+      {{property-editor
+        property=parameter
+        onChange=(action (pipe (action 'updateParameter' parameter) (action onChange)))
+        onRemove=(action (pipe (action 'removeParameter' parameter) (action onChange)))}}
     </li>
   {{/each}}
 </ul>

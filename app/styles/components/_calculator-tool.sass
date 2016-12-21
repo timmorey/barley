@@ -1,0 +1,36 @@
+.calculator-tool
+  padding: .5rem
+  display: flex
+  flex-direction: column
+  font-family: 'Menlo', 'Courier New', monospace
+  font-size: 13px
+
+  &-history
+    border: 1px solid #eee
+    overflow: auto
+    flex: 1
+    margin-bottom: .5rem
+
+    &-item
+      margin: .25rem
+
+      &-input,
+      &-output,
+      &-error
+        display: block
+
+      &-output,
+      &-error
+        margin-left: 1rem
+
+      &-output
+        color: steelblue
+
+      &-error
+        color: tomato
+
+  &-input-area
+    display: flex
+
+  &-input
+    flex: 1

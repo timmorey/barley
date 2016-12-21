@@ -1,15 +1,28 @@
 import Ember from 'ember';
+import IngredientGroupViewModel from 'barley/view-models/ingredient-group';
 
-const { Component, get, run } = Ember;
+const { Component, computed, get, inject, run, set } = Ember;
 
 export default Component.extend({
 
   classNames: ['ingredient-group-editor'],
 
+  store: inject.service(),
+
   ingredientGroup: undefined,
 
   allowEditTitle: true,
   allowRemove: true,
+  showTotal: false,
+
+  ingredientGroupViewModel: computed('ingredientGroup', function() {
+    const viewModel = IngredientGroupViewModel.create({ content: get(this, 'ingredientGroup') });
+    get(this, 'store').findAll('resource')
+      .then(resources => set(viewModel, 'resources', resources));
+    return viewModel;
+  }),
+
+  total: computed.alias('ingredientGroupViewModel.totalMass'),
 
   actions: {
 
@@ -18,7 +31,7 @@ export default Component.extend({
     },
 
     addIngredient() {
-      const newIngredient = { measure: '', unit: '', resource: null };
+      const newIngredient = { amount: '', resourceId: '' };
       const updatedIngredients = (get(this, 'ingredientGroup.ingredients') || []).concat(newIngredient);
       run.next(() => this.$('.ingredient-editor:last .ingredient-editor-measure-input').focus());
       return { title: get(this, 'ingredientGroup.title'), ingredients: updatedIngredients };

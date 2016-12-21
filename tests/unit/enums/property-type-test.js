@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import PropertyType from 'workforce-js/enums/property-type';
+import PropertyType from 'barley/enums/property-type';
 
 module('Unit | enum | PropertyType', {
   needs: []

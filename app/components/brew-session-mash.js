@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import BrewSessionViewModel from 'barley/view-models/brew-session';
+import MeasureViewModel from 'barley/view-models/measure';
 
 const { Component, computed, get, inject, set } = Ember;
 
@@ -20,56 +21,38 @@ export default Component.extend({
     return viewModel;
   }),
 
-  grainsGroup: computed('brewSession.grains', {
-    get() {
-      return { title: 'Grains', ingredients: get(this, 'brewSession.grains') };
-    },
-    set(key, value) {
-      set(this, 'brewSession.grains', get(value, 'ingredients'));
-      return value;
-    }
-  }),
-
+  grainGroup: computed.alias('brewSessionViewModel.grainGroup'),
   totalGrainMass: computed.alias('brewSessionViewModel.totalGrainMass'),
-
-  mashThickness: computed.alias('brewSessionViewModel.mashThickness'),
-
-  strikeVolume: computed.alias('brewSessionViewModel.strikeVolume'),
-
-  mashTemperature: computed.alias('brewSessionViewModel.mashTemperature'),
-
   grainTemperature: computed.alias('brewSessionViewModel.grainTemperature'),
-
+  mashThickness: computed.alias('brewSessionViewModel.mashThickness'),
+  mashTemperature: computed.alias('brewSessionViewModel.mashTemperature'),
+  strikeVolume: computed.alias('brewSessionViewModel.strikeVolume'),
   strikeTemperature: computed.alias('brewSessionViewModel.strikeTemperature'),
 
   actions: {
 
-    updateGrains(grainsGroup) {
-      set(this, 'grainsGroup', grainsGroup);
+    updateGrains(grainGroup) {
+      set(this, 'grainGroup', grainGroup);
     },
 
-    updateMashThicknessMeasure(event) {
-      set(this, 'brewSession.mashThickness', { measure: event.target.value, unit: get(this, 'brewSession.mashThickness.unit') || '' });
+    updateMashThickness(event) {
+      set(this, 'mashThickness', MeasureViewModel.create({ value: event.target.value }));
     },
 
-    updateMashThicknessUnit(event) {
-      set(this, 'brewSession.mashThickness', { measure: get(this, 'brewSession.mashThickness.measure') || '', unit: event.target.value });
+    updateMashTemperature(event) {
+      set(this, 'mashTemperature', MeasureViewModel.create({ value: event.target.value }));
     },
 
-    updateMashTemperatureMeasure(event) {
-      set(this, 'brewSession.mashTemperature', { measure: event.target.value, unit: get(this, 'brewSession.mashTemperature.unit') || '' });
+    updateGrainTemperature(event) {
+      set(this, 'grainTemperature', MeasureViewModel.create({ value: event.target.value }));
     },
 
-    updateMashTemperatureUnit(event) {
-      set(this, 'brewSession.mashTemperature', { measure: get(this, 'brewSession.mashTemperature.measure') || '', unit: event.target.value });
+    updateStrikeVolume(event) {
+      set(this, 'strikeVolume', MeasureViewModel.create({ value: event.target.value }));
     },
 
-    updateGrainTemperatureMeasure(event) {
-      set(this, 'brewSession.grainTemperature', { measure: event.target.value, unit: get(this, 'brewSession.grainTemperature.unit') || '' });
-    },
-
-    updateGrainTemperatureUnit(event) {
-      set(this, 'brewSession.grainTemperature', { measure: get(this, 'brewSession.grainTemperature.measure') || '', unit: event.target.value });
+    updateStrikeTemperature(event) {
+      set(this, 'strikeTemperature', MeasureViewModel.create({ value: event.target.value }));
     }
 
   }

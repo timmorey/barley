@@ -1,0 +1,38 @@
+.brew-session-stream
+  display: flex
+  flex-direction: column
+
+  &-list
+    flex: 1
+    overflow: auto
+    list-style: none
+    border: 1px solid #eee
+    padding: 0
+
+    &-item
+      display: flex
+      align-items: baseline
+      line-height: 2rem
+
+      &:nth-child(odd)
+        background-color: #eee
+
+      &:hover .brew-session-stream-event-remove-button
+        opacity: 1
+
+  &-event-timestamp
+    font-size: .8em
+    color: #888
+    padding: 0 1rem
+
+  &-event-label
+
+  &-event-measure
+    flex: 1
+    padding: 0 1rem
+
+  &-event-remove-button
+    opacity: .2
+    transition: opacity .2s ease
+
+  &-event:hover

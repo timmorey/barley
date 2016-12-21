@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import <%= classifiedModuleName %> from 'workforce-js/enums/<%= dasherizedModuleName %>';
+import <%= classifiedModuleName %> from 'barley/enums/<%= dasherizedModuleName %>';
 
 module('Unit | enum | <%= classifiedModuleName %>', {
   needs: []

@@ -1,12 +1,20 @@
 .ingredient-group-editor
 
+  %label
+    font-size: .8em
+    text-transform: uppercase
+    color: #888
+
+
   &-header
     display: flex
+    align-items: baseline
 
     .remove-ingredient-group-button
       margin-left: auto
 
   &-list-header
+    @extend %label
     margin: .5rem
     display: flex
     align-items: baseline
@@ -19,16 +27,17 @@
     &-item
       margin: .5rem
 
-  &-list-header-measure,
-  .ingredient-editor-measure-input
-    flex: 0 1 100px
-
-  &-list-header-unit,
-  .ingredient-editor-unit-input
-    flex: 0 1 100px
-    margin-left: 5px
+  &-list-header-amount,
+  .ingredient-editor-amount-input
+    flex: 0 1 120px
 
   &-list-header-resource,
   .ingredient-editor-resource-picker
     flex: 1
     margin-left: 5px
+
+  &-total
+    margin: .5rem
+
+    &-label
+      @extend %label

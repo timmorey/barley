@@ -20,8 +20,8 @@
   <ul class='parameter-list'>
     {{#each process.parameters key='@index' as |parameter|}}
       <li class='parameter-list-item'>
-        {{parameter-definition-editor
-          parameterDefinition=parameter
+        {{property-definition-editor
+          propertyDefinition=parameter
           onChange=(action (pipe (action 'updateParameter' parameter) (action onChange)))
           onRemove=(action (pipe (action 'removeParameter' parameter) (action onChange)))}}
       </li>

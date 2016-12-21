@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import Resource from 'workforce-js/view-models/resource';
+import Resource from 'barley/view-models/resource';
 
 module('Unit | view-model | Resource', {
   needs: []

@@ -11,7 +11,7 @@ export default Component.extend({
   actions: {
 
     addParameter() {
-      const newParameter = { name: '', value: '' };
+      const newParameter = { name: '', type: '' };
       const updatedParameters = (get(this, 'process.parameters') || []).concat(newParameter);
       set(this, 'process.parameters', updatedParameters);
     },

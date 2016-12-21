@@ -13,8 +13,7 @@
   {{/if}}
 </div>
 <div class='ingredient-group-editor-list-header'>
-  <span class='ingredient-group-editor-list-header-measure'>Measure</span>
-  <span class='ingredient-group-editor-list-header-unit'>Unit</span>
+  <span class='ingredient-group-editor-list-header-amount'>Amount</span>
   <span class='ingredient-group-editor-list-header-resource'>Resource</span>
 </div>
 <ul class='ingredient-group-editor-list'>
@@ -27,3 +26,9 @@
     </li>
   {{/each}}
 </ul>
+{{#if showTotal}}
+  <div class='ingredient-group-editor-total'>
+    <span class='ingredient-group-editor-total-label'>Total</span>
+    <span class='ingredient-group-editor-total-amount'>{{total.significantValue}}</span>
+  </div>
+{{/if}}

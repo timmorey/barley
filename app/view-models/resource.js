@@ -1,19 +1,24 @@
 import Ember from 'ember';
+import MeasureViewModel from 'barley/view-models/measure';
 
-const { ObjectProxy, computed, get, getProperties } = Ember;
+const { ObjectProxy, computed, get } = Ember;
 
 export default ObjectProxy.extend({
 
   specificHeatCapacity: computed('properties', function() {
     const property = (get(this, 'properties') || []).find(property =>
       get(property, 'name').trim().toUpperCase() === 'SPECIFIC HEAT CAPACITY');
-    return property ? getProperties(property, 'measure', 'unit') : undefined;
+    if (property) {
+      return MeasureViewModel.create({ value: get(property, 'value') });
+    }
   }),
 
   density: computed('properties', function() {
     const property = (get(this, 'properties') || []).find(property =>
       get(property, 'name').trim().toUpperCase() === 'DENSITY');
-    return property ? getProperties(property, 'measure', 'unit') : undefined;
+    if (property) {
+      return MeasureViewModel.create({ value: get(property, 'value') });
+    }
   })
 
 });

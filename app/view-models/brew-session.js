@@ -1,69 +1,163 @@
 import Ember from 'ember';
 import IngredientViewModel from 'barley/view-models/ingredient';
-import { add, subtract, multiply, divide, convert } from 'barley/utils/units';
+import IngredientGroupViewModel from 'barley/view-models/ingredient-group';
+import MeasureViewModel from 'barley/view-models/measure';
 
-const { ObjectProxy, computed, get } = Ember;
+const { ObjectProxy, computed, get, isPresent, set } = Ember;
 
 export default ObjectProxy.extend({
 
   resources: undefined,
   processes: undefined,
 
-  totalGrainMass: computed('grains', function() {
-    return (get(this, 'grains') || []).reduce((total, ingredient) => {
-      return add(total, ingredient);
+  grainGroup: computed('grains', {
+    get() {
+      return { title: 'Grains', ingredients: get(this, 'grains') || [] };
+    },
+    set(key, value) {
+      set(this, 'grains', get(value, 'ingredients'));
+      return value;
+    }
+  }),
+
+  grainGroupViewModel: computed('grains', 'resources', function() {
+    return IngredientGroupViewModel.create({
+      content: get(this, 'grainGroup'),
+      resources: get(this, 'resources')
     });
   }),
 
-  strikeVolume: computed('totalGrainMass', 'mashThickness', function() {
-    return multiply(get(this, 'totalGrainMass'), get(this, 'mashThickness'));
+  totalGrainMass: computed.alias('grainGroupViewModel.totalMass'),
+
+  grainTemperature: computed('conten.grainTemperature', {
+    get() {
+      if (isPresent(get(this, 'content.grainTemperature'))) {
+        return MeasureViewModel.create({ value: get(this, 'content.grainTemperature') });
+      }
+    },
+    set(key, value) {
+      set(this, 'content.grainTemperature', get(value, 'value'));
+      return value;
+    }
+  }),
+
+  mashThickness: computed('content.mashThickness', 'strikeVolume', 'totalGrainMass', {
+    get() {
+      if (isPresent(get(this, 'content.mashThickness'))) {
+        return MeasureViewModel.create({ value: get(this, 'content.mashThickness') });
+      } else if (isPresent(get(this, 'content.strikeVolume'))) {
+        if (get(this, 'strikeVolume') && get(this, 'totalGrainMass')) {
+          return get(this, 'strikeVolume').divideBy(get(this, 'totalGrainMass'));
+        }
+      }
+    },
+    set(key, value) {
+      set(this, 'content.mashThickness', get(value, 'value'));
+      set(this, 'content.strikeVolume', null);
+      return value;
+    }
+  }),
+
+  mashTemperature: computed(
+    'content.mashTemperature',
+    'strikeWaterViewModel.heatCapacity',
+    'strikeTemperature',
+    'grainGroupViewModel.heatCapacity',
+    'grainTemperature',
+    'mashGroupViewModel.heatCapacity', {
+    get() {
+      if (isPresent(get(this, 'content.mashTemperature'))) {
+        return MeasureViewModel.create({ value: get(this, 'content.mashTemperature') });
+      } else if (isPresent(get(this, 'content.strikeTemperature'))) {
+        const strikeHeatCapacity = get(this, 'strikeWaterViewModel.heatCapacity');
+        const strikeTemperature = get(this, 'strikeTemperature');
+        const grainHeatCapacity = get(this, 'grainGroupViewModel.heatCapacity');
+        const grainTemperature = get(this, 'grainTemperature');
+        const mashHeatCapacity = get(this, 'mashGroupViewModel.heatCapacity');
+        if (strikeHeatCapacity && strikeTemperature && grainHeatCapacity && grainTemperature && mashHeatCapacity) {
+          const strikeEnergy = strikeHeatCapacity.times(strikeTemperature);
+          const grainEnergy = grainHeatCapacity.times(grainTemperature);
+          const mashEnergy = strikeEnergy.plus(grainEnergy);
+          const mashTemp = mashEnergy.divideBy(mashHeatCapacity);
+          return mashTemp.to(get(strikeTemperature, 'unit'));
+        }
+      }
+    },
+    set(key, value) {
+      set(this, 'content.mashTemperature', get(value, 'value'));
+      set(this, 'content.strikeTemperature', null);
+      return value;
+    }
+  }),
+
+  strikeVolume: computed('content.strikeVolume', 'totalGrainMass', 'mashThickness', {
+    get() {
+      if (isPresent(get(this, 'content.strikeVolume'))) {
+        return MeasureViewModel.create({ value: get(this, 'content.strikeVolume') });
+      } else if (isPresent(get(this, 'content.mashThickness'))) {
+        if (get(this, 'totalGrainMass') && get(this, 'mashThickness')) {
+          return get(this, 'totalGrainMass').times(get(this, 'mashThickness'));
+        }
+      }
+    },
+    set(key, value) {
+      set(this, 'content.strikeVolume', get(value, 'value'));
+      set(this, 'content.mashThickness', null);
+      return value;
+    }
   }),
 
   strikeWater: computed('strikeVolume', function() {
     return {
-      measure: get(this, 'strikeVolume.measure'),
-      unit: get(this, 'strikeVolume.unit'),
-      resourceId: '-KXVlcF4yrC2QQvwdXPc'
+      amount: get(this, 'strikeVolume.value'),
+      resourceId: '-KZc-lkFlHeWWZuB-yXt'
     };
   }),
 
-  strikeTemperature: computed('mashTemperature', 'grainTemperature', 'strikeVolume', 'resources', function() {
-    const mashIngredients = get(this, 'grains').concat(get(this, 'strikeWater'));
-    const mashEnergy = mashIngredients.reduce((mashEnergy, ingredient) => {
-      if (mashEnergy === undefined) {
-        return undefined;
+  strikeWaterViewModel: computed('strikeWater', 'resources', function() {
+    return IngredientViewModel.create({
+      content: get(this, 'strikeWater'),
+      resources: get(this, 'resources')
+    });
+  }),
+
+  mashGroupViewModel: computed('grains', 'strikeWater', 'resources', function() {
+    return IngredientGroupViewModel.create({
+      content: { ingredients: get(this, 'grains').concat(get(this, 'strikeWater')) },
+      resources: get(this, 'resources')
+    });
+  }),
+
+  strikeTemperature: computed(
+    'content.strikeTemperature',
+    'mashGroupViewModel.heatCapacity',
+    'mashTemperature',
+    'grainGroupViewModel.heatCapacity',
+    'grainTemperature',
+    'strikeWaterViewModel.heatCapacity', {
+    get() {
+      if (isPresent(get(this, 'content.strikeTemperature'))) {
+        return MeasureViewModel.create({ value: get(this, 'content.strikeTemperature') });
+      } else if (isPresent(get(this, 'content.mashTemperature'))) {
+        const mashHeatCapacity = get(this, 'mashGroupViewModel.heatCapacity');
+        const mashTemperature = get(this, 'mashTemperature');
+        const grainHeatCapacity = get(this, 'grainGroupViewModel.heatCapacity');
+        const grainTemperature = get(this, 'grainTemperature');
+        const strikeHeatCapacity = get(this, 'strikeWaterViewModel.heatCapacity');
+        if (mashHeatCapacity && mashTemperature && grainHeatCapacity && grainTemperature && strikeHeatCapacity) {
+          const mashEnergy = mashHeatCapacity.times(mashTemperature);
+          const grainEnergy = grainHeatCapacity.times(grainTemperature);
+          const strikeEnergy = mashEnergy.minus(grainEnergy);
+          const strikeTemp = strikeEnergy.divideBy(strikeHeatCapacity);
+          return strikeTemp.to(get(mashTemperature, 'unit'));
+        }
       }
-      const ingredientViewModel = IngredientViewModel.create({
-        content: ingredient,
-        resources: get(this, 'resources'),
-        currentTemperature: get(this, 'mashTemperature')
-      });
-      if (get(ingredientViewModel, 'heatEnergy') === undefined) {
-        return undefined;
-      }
-      return add(mashEnergy, get(ingredientViewModel, 'heatEnergy'));
-    }, { measure: 0, unit: 'J' });
-    const grainEnergy = get(this, 'grains').reduce((grainEnergy, ingredient) => {
-      if (grainEnergy === undefined) {
-        return undefined;
-      }
-      const ingredientViewModel = IngredientViewModel.create({
-        content: ingredient,
-        resources: get(this, 'resources'),
-        currentTemperature: get(this, 'grainTemperature')
-      });
-      if (get(ingredientViewModel, 'heatEnergy') === undefined) {
-        return undefined;
-      }
-      return add(grainEnergy, get(ingredientViewModel, 'heatEnergy'));
-    }, { measure: 0, unit: 'J' });
-    if (mashEnergy === undefined || grainEnergy === undefined) {
-      return undefined;
+    },
+    set(key, value) {
+      set(this, 'content.strikeTemperature', get(value, 'value'));
+      set(this, 'content.mashTemperature', null);
+      return value;
     }
-    const waterEnergy = subtract(mashEnergy, grainEnergy);
-    const waterViewModel = IngredientViewModel.create({ content: get(this, 'strikeWater'), resources: get(this, 'resources') });
-    const waterTemp = divide(divide(waterEnergy, get(waterViewModel, 'mass')), get(waterViewModel, 'resourceViewModel.specificHeatCapacity'));
-    return convert(waterTemp, get(this, 'mashTemperature.unit'));
   })
 
 });

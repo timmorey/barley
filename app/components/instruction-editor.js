@@ -28,6 +28,10 @@ export default Component.extend({
         .concat(newParameter)
         .concat(get(this, 'instruction.parameters').slice(parameterPos + 1));
       return { processId: get(this, 'instruction.processId'), parameters: updatedParameters };
+    },
+
+    removeParameter(parameter) {
+      return { processId: get(this, 'instruction.processId'), parameters: get(this, 'instruction.parameters').without(parameter) };
     }
 
   }

@@ -1,0 +1,15 @@
+{{sensor-picker
+  selectedSensor=sensor
+  onChange=(action (mut sensor))}}
+<div class='mash-tun-current-temp'>
+  <span class='mash-tun-current-temp-label'>Current Temperature</span>
+  <span class='mash-tun-current-temp-value'>{{latestTemp.temperature}}</span>
+</div>
+{{time-series-chart
+  lineData=tempTimeSeries
+  selectedInterval='S'
+  yAxisFromZero=true
+  xValueDisplayName='time'
+  hasXAxisTitle=true
+  yValueDisplayName='temperature (celcius)'
+  hasYAxisTitle=true}}

@@ -13,24 +13,14 @@ export default Component.extend({
     updateName(event) {
       return {
         name: event.target.value,
-        measure: get(this, 'proprety.measure') || '',
-        unit: get(this, 'property.unit') || ''
+        value: get(this, 'property.value') || ''
       };
     },
 
-    updateMeasure(event) {
+    updateValue(event) {
       return {
         name: get(this, 'property.name') || '',
-        measure: event.target.value,
-        unit: get(this, 'property.unit') || ''
-      };
-    },
-
-    updateUnit(event) {
-      return {
-        name: get(this, 'property.name') || '',
-        measure: get(this, 'property.measure') || '',
-        unit: event.target.value
+        value: event.target.value
       };
     }
 

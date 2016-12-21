@@ -12,6 +12,8 @@ Router.map(function() {
       this.route('edit', function() {
         this.route('mash');
         this.route('boil');
+        this.route('ferment');
+        this.route('stream');
       });
     });
     this.route('new');
@@ -34,6 +36,7 @@ Router.map(function() {
       this.route('edit');
     });
   });
+  this.route('mash-tun');
 });
 
 export default Router;

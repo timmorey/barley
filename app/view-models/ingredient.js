@@ -1,14 +1,12 @@
 import Ember from 'ember';
+import MeasureViewModel from 'barley/view-models/measure';
 import ResourceViewModel from 'barley/view-models/resource';
-import { multiply, divide, isMass, isVolume } from 'barley/utils/units';
 
-const { ObjectProxy, computed, get, getProperties } = Ember;
+const { ObjectProxy, computed, get } = Ember;
 
 export default ObjectProxy.extend({
 
   resources: undefined,
-
-  currentTemperature: undefined,
 
   resource: computed('resourceId', 'resources', function() {
     return (get(this, 'resources') || []).findBy('id', get(this, 'resourceId'));
@@ -18,42 +16,29 @@ export default ObjectProxy.extend({
     return ResourceViewModel.create({ content: get(this, 'resource') });
   }),
 
-  heatEnergy: computed('resourceViewModel.specificHeatCapacity', 'currentTemperature', 'measure', 'unit', function() {
-    const specificHeatCapacity = get(this, 'resourceViewModel.specificHeatCapacity');
-    const mass = get(this, 'mass');
-    const temperature = get(this, 'currentTemperature');
-    if (specificHeatCapacity === undefined || mass === undefined || temperature === undefined) {
-      return undefined;
-    } else {
-      return multiply(multiply(specificHeatCapacity, mass), temperature);
+  measure: computed('amount', function() {
+    return MeasureViewModel.create({ value: get(this, 'amount') });
+  }),
+
+  mass: computed('measure', 'resourceViewModel.density', function() {
+    if (get(this, 'measure.isMass')) {
+      return get(this, 'measure');
+    } else if (get(this, 'measure.isVolume') && get(this, 'resourceViewModel.density')) {
+      return get(this, 'measure').times(get(this, 'resourceViewModel.density'));
     }
   }),
 
-  amount: computed('measure', 'unit', function() {
-    return getProperties(this, 'measure', 'unit');
-  }),
-
-  isMassMeasurement: computed('unit', function() {
-    return isMass(getProperties(this, 'measure', 'unit'));
-  }),
-
-  isVolumeMeasurement: computed('unit', function() {
-    return isVolume(getProperties(this, 'measure', 'unit'));
-  }),
-
-  mass: computed('isMassMeasurement', 'isVolumeMeasurement', 'resourceViewModel.density', 'measure', function() {
-    if (get(this, 'isMassMeasurement')) {
-      return getProperties(this, 'measure', 'unit');
-    } else if (get(this, 'isVolumeMeasurement') && get(this, 'resourceViewModel.density')) {
-      return multiply(get(this, 'amount'), get(this, 'resourceViewModel.density'));
+  volume: computed('measure', 'resourceViewModel.density', function() {
+    if (get(this, 'measure.isVolume')) {
+      return get(this, 'measure');
+    } else if (get(this, 'measure.isMass') && get(this, 'resourceViewModel.density')) {
+      return get(this, 'measure').divideBy(get(this, 'resourceViewModel.density'));
     }
   }),
 
-  volume: computed('isMassMeasurement', 'isVolumeMeasurement', 'resourceViewModel.density', 'measure', function() {
-    if (get(this, 'isVolumeMeasurement')) {
-      return get(this, 'amount');
-    } else if (get(this, 'isMassMeasurement') && get(this, 'resourceViewModel.density')) {
-      return divide(get(this, 'amount'), get(this, 'resourceViewModel.density'));
+  heatCapacity: computed('mass', 'resourceViewModel.specificHeatCapacity', function() {
+    if (get(this, 'mass') && get(this, 'resourceViewModel.specificHeatCapacity')) {
+      return get(this, 'mass').times(get(this, 'resourceViewModel.specificHeatCapacity'));
     }
   })
 
